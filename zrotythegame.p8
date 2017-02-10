@@ -23,13 +23,18 @@ function drawFramework()
    end  
 end
 
-
-positionx=7.9
+basePositionx = 7.9
+positionx=basePositionx
 increase = 0.97599
 yUpLimit = 8
 positiony = 0
 delta = 0
+frameCounter = 0
 function _update()
+ frameCounter = frameCounter + 1 
+ if btn(4) then
+  resetField()
+ end
  -- Increase x every frame for create field
  positionx=positionx+increase
 end
@@ -41,7 +46,11 @@ function _draw()
   
 end
 
-
+function resetField()
+   cls()
+   drawFramework()
+   positionx=basePositionx
+end
 function processField(height)
 if(height > 12) then height = 12 end
   if positionx<120 then
@@ -56,10 +65,12 @@ end
 function drawTemporalCounter()
  rectfill(10,9,55,15,5)
  rectfill(60,9,105,15,5)
+ rectfill(60,16,105,30,5)
  rectfill(10,16,55,30,5)
  print("x: "..positionx,10,10,7)
  print("y: "..positionx,60,10,7)
  print("d: "..delta,10,18,7)
+  print("fc: "..frameCounter,60,18,12)
 end
 
 
