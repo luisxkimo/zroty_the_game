@@ -3,11 +3,11 @@ version 8
 __lua__
 function _init()
   cls()
-  drawfield()
+  drawFramework()
 end
 
 
-function drawfield()
+function drawFramework()
   spr(32,0,0)
   spr(32,120,120,1,1,true,true)
   spr(32,0,120,1,1,false,true)
@@ -24,43 +24,42 @@ function drawfield()
 end
 
 
-t=7.9
-origin = 101
+positionx=7.9
+increase = 0.97599
+yUpLimit = 8
+positiony = 0
+delta = 0
 function _update()
- t=t+0.988888
+ -- Increase x every frame for create field
+ positionx=positionx+increase
 end
 
 function _draw()
 
- -- show current value of t
- rectfill(10,9,55,15,5)
- print("t: "..t,10,10,7)
-
- if t<120 then
-  z = sin(t) +4.5
-  pset(t, z*15,25) 
- end
-
-  if t<120 then
-  z = sin(t) +4.5
- line(t, z*15,t,120,15)
- end
+  drawTemporalCounter()
+  processField(5)
   
- 
- 
- -- show state of buttons
+end
 
- --print("buttons: ", 1,101,7) 
 
- --for p=0,7 do 
- --for i=0,5 do
-  --col=5
-  --if(btn(i,p)) then col=8+i end
-  --rectfill(40+i*10,100+p*3,
-   --48+i*10, 101+p*3, col)
- --end
- --loadend
+function processField(height)
+if(height > 12) then height = 12 end
+  if positionx<120 then
+   delta = sin(positionx) + height
+   positiony = delta * 10
+   if(positiony < 120) then
+    line(positionx, positiony,positionx,119,15)
+    end
+  end
+end
 
+function drawTemporalCounter()
+ rectfill(10,9,55,15,5)
+ rectfill(60,9,105,15,5)
+ rectfill(10,16,55,30,5)
+ print("x: "..positionx,10,10,7)
+ print("y: "..positionx,60,10,7)
+ print("d: "..delta,10,18,7)
 end
 
 
